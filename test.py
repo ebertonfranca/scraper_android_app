@@ -1,17 +1,18 @@
 import json
-from scraper_android_app.utils import load_comments, analyze_sentiment, print_header
+from utils import load_comments, analyze_sentiment, print_header
 
 def test_load_comments():
     # Mock JSON data to test load_comments
-    mock_json_data = """
-    {"content": "I love the new update! Everything works perfectly."}
-    {"content": "The app keeps crashing. Very frustrating!"}
-    {"content": "Not bad, but could be better."}
-    """
+    mock_json_data = [
+        {"content": "I love the new update! Everything works perfectly.", "score": 4},
+        {"content": "The app keeps crashing. Very frustrating!", "score": 2},
+        {"content": "Not bad, but could be better.", "score": 3}
+    ]
     
     # Write mock data to a temporary file
     with open('mock_google_play_reviews.json', 'w', encoding='utf-8') as f:
-        f.write(mock_json_data)
+        for entry in mock_json_data:
+            f.write(json.dumps(entry) + '\n')
     
     # Load comments using the function
     comments = load_comments('mock_google_play_reviews.json')
