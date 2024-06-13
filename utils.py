@@ -13,6 +13,10 @@ nltk.download('punkt')
 load_dotenv()
 openai_api_key = os.getenv('OPENAI_API_KEY')
 
+# Verifique se a chave da API foi carregada corretamente
+if not openai_api_key:
+    raise ValueError("A chave da API do OpenAI não foi encontrada. Verifique o arquivo .env.")
+
 # Usar a chave API carregada do arquivo de ambiente
 llm = ChatOpenAI(api_key=openai_api_key, model='gpt-3.5-turbo')
 
@@ -100,8 +104,8 @@ def analyze_sentiment(comments):
                     print(f"- {comment}")
             else:
                 print(f"Sem análises {sentiment.lower()}s.")
-
         print("\n")
+
         for line in summary:
             print(line)
 
@@ -112,6 +116,10 @@ def analyze_sentiment(comments):
             "Análise para o Conselho Executivo": " ".join(summary).strip()
         }
 
+        # Print the executive summary to ensure it's captured
+        print("\nAnálise para o Conselho Executivo:")
+        print(result["Análise para o Conselho Executivo"])
+
         save_to_json(result, "android_sentiment_analysis.json")
     except Exception as e:
         print(f"Erro ao analisar sentimentos: {e}")
@@ -121,3 +129,17 @@ def print_header(header):
     print("\n" + "=" * 80)
     print(header)
     print("=" * 80)
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) < 3:
+        print("Uso: python app.py <caso_de_uso|todos> <arquivo_json>")
+        sys.exit(1)
+    case_of_use = sys.argv[1]
+    json_file = sys.argv[2]
+    comments = load_comments(json_file)
+    if case_of_use == "analise_sentimento":
+        print_header("Análise de Sentimento")
+        analyze_sentiment(comments)
+    else:
+        print("Caso de uso inválido")
