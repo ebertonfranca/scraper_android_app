@@ -1,9 +1,6 @@
 import sys
 from utils import (load_comments, analyze_sentiment, print_header)
 
-import sys
-from utils import (load_comments, analyze_sentiment, print_header)
-
 def main():
     if len(sys.argv) < 3:
         print("Uso: python app.py <caso_de_uso|todos> <arquivo_json>")

@@ -33,7 +33,7 @@ source venv/bin/activate  # Para Linux e macOS
 7. Instale as dependências:
 
 ```
-pip install -r pandas nltk langchain openai python-dotenv
+pip install -r pandas nltk langchain openai python-dotenv streamlit 
 ```
 
 8. Executar o Script de raspagem
