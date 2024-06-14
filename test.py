@@ -4,9 +4,18 @@ from utils import load_comments, analyze_sentiment, print_header
 def test_load_comments():
     # Mock JSON data to test load_comments
     mock_json_data = [
-        {"content": "I love the new update! Everything works perfectly.", "score": 4},
-        {"content": "The app keeps crashing. Very frustrating!", "score": 2},
-        {"content": "Not bad, but could be better.", "score": 3}
+        {
+            "content": "I love the new update! Everything works perfectly.",
+            "date": "13-06-2024"
+        },
+        {
+            "content": "The app keeps crashing. Very frustrating!",
+            "date": "13-06-2024"
+        },
+        {
+            "content": "Not bad, but could be better.",
+            "date": "13-06-2024"
+        }
     ]
     
     # Write mock data to a temporary file
@@ -19,16 +28,34 @@ def test_load_comments():
     
     # Check if the loaded comments match the mock data
     assert comments == [
-        "I love the new update! Everything works perfectly.",
-        "The app keeps crashing. Very frustrating!",
-        "Not bad, but could be better."
+        {
+            "content": "I love the new update! Everything works perfectly.",
+            "date": "13-06-2024"
+        },
+        {
+            "content": "The app keeps crashing. Very frustrating!",
+            "date": "13-06-2024"
+        },
+        {
+            "content": "Not bad, but could be better.",
+            "date": "13-06-2024"
+        }
     ]
 
 def test_analyze_sentiment():
     comments = [
-        "I love the new update! Everything works perfectly.",
-        "The app keeps crashing. Very frustrating!",
-        "Not bad, but could be better."
+        {
+            "content": "I love the new update! Everything works perfectly.",
+            "date": "13-06-2024"
+        },
+        {
+            "content": "The app keeps crashing. Very frustrating!",
+            "date": "13-06-2024"
+        },
+        {
+            "content": "Not bad, but could be better.",
+            "date": "13-06-2024"
+        }
     ]
     analyze_sentiment(comments)
 
