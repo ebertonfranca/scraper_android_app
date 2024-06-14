@@ -9,7 +9,7 @@ def carregar_dados(file_path):
         with open(file_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
             data = corrigir_chaves(data)
-        return data
+            return data
     except Exception as e:
         st.error(f"Erro ao carregar o arquivo JSON {file_path}: {e}")
         return None
@@ -18,7 +18,6 @@ def corrigir_chaves(data):
     # Normalizar chaves para lidar com variações
     if "Comentários por Tópicos" in data:
         data["Comentários por Tópicos"] = {k.lower(): v for k, v in data["Comentários por Tópicos"].items()}
-    if "comentário" in data or "comentario" in data:
         for key in data["Comentários por Tópicos"]:
             for item in data["Comentários por Tópicos"][key]:
                 if "comentário" in item:
@@ -53,10 +52,8 @@ if not dados_completos:
 
 # Unir os dados dos arquivos selecionados
 comentarios_df = pd.DataFrame()
-sentimentos_df = pd.DataFrame()
 analises_conselho = []
 for data in dados_completos:
-    sentimentos = data["Tabela de Sentimentos"]
     comentarios_por_topicos = data["Comentários por Tópicos"]
     analises_conselho.append(data["Análise para o Conselho Executivo"])
     for sentimento, comentarios in comentarios_por_topicos.items():
