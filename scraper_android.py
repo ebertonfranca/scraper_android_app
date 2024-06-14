@@ -10,7 +10,7 @@ lang = 'pt'  # Idioma português
 country = 'br'  # País Brasil
 
 # Função para extrair e salvar análises do Google Play
-def scrape_google_play_reviews(app_id, lang, country, count=50):
+def scrape_google_play_reviews(app_id, lang, country, count=10):
     result, _ = reviews(
         app_id,
         lang=lang,
