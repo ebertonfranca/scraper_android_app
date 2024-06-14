@@ -8,8 +8,8 @@ def carregar_dados(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
-            data = corrigir_chaves(data)
-            return data
+        data = corrigir_chaves(data)
+        return data
     except Exception as e:
         st.error(f"Erro ao carregar o arquivo JSON {file_path}: {e}")
         return None
@@ -22,6 +22,12 @@ def corrigir_chaves(data):
             for item in data["Comentários por Tópicos"][key]:
                 if "comentário" in item:
                     item["comentario"] = item.pop("comentário")
+                elif "Comentário" in item:
+                    item["comentario"] = item.pop("Comentário")
+                if "data" in item:
+                    item["data"] = item.pop("data")
+                elif "Data" in item:
+                    item["data"] = item.pop("Data")
     return data
 
 # Adicionar imagem na barra lateral
@@ -88,7 +94,8 @@ bar_chart = alt.Chart(topicos_count).mark_bar().encode(
     y=alt.Y('count:Q', title='Quantidade'),
     color=alt.Color('sentimento:N', scale=color_scale, legend=None)
 ).properties(
-    width=600, height=400
+    width=600,
+    height=400
 )
 
 # Adicionar rótulos às barras
@@ -120,7 +127,6 @@ for index, row in comentarios_df.iterrows():
         sentimento_color = 'gray'
     else:
         sentimento_color = 'red'
-    
     comentario = row.get('comentario', 'Comentário não disponível')
     st.markdown(f"<p style='color:white;'><b>{row['data'].strftime('%d-%m-%Y')}:</b> {comentario} <span style='color:{sentimento_color};'>({row['sentimento']})</span></p>", unsafe_allow_html=True)
 
